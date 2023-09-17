@@ -15,10 +15,9 @@ const AddTopic = () => {
     if (!title || !description) {
       alert('Title and Description are requyired');
     }
-
     try {
       const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/topics`, { title, description });
-
+      
       if (res) {
         router.refresh()
         router.push("/")
@@ -30,7 +29,7 @@ const AddTopic = () => {
   }
 
   return (
-    <form className="flex flex-col gap-3" onSubmit={() => handleSubmit}>
+    <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
       <input className="border border-slate-500 px-8 py-2" type="text" placeholder="Topic Title" onChange={e => setTitle(e.target.value)} value={title} />
 
       <input className="border border-slate-500 px-8 py-2" type="text" placeholder="Topic Description" onChange={e => setDescription(e.target.value)} value={description} />
