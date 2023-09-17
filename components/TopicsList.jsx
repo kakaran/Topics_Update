@@ -6,21 +6,23 @@ const getTopics = async () => {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/topics`)
 
+        if (!res.ok) {
+            throw new Error("Failed")
+        }
         const Data = await res.json()
-        return Data;
+        return Data
     } catch (error) {
         console.log("Error loading topis", error);
     }
 }
 
+export default async function TopicsList() {
 
-const TopicsList = async () => {
-
-    const data = await getTopics()
+    const Data = await getTopics()
     return (
         <>
-            {data.topics.map(t => {
-                return <div key={t.title} className='p-4 border border-slate-300 my-3 flex justify-between gap-5 items-start'>
+            {Data.topics.map((t, index) => (
+                <div key={index} className='p-4 border border-slate-300 my-3 flex justify-between gap-5 items-start'>
                     <div>
                         <h2 className='font-bold text-2xl'>{t.title}</h2>
                         <div>{t.description}</div>
@@ -32,11 +34,9 @@ const TopicsList = async () => {
                         </Link>
                     </div>
                 </div>
-
-            })}
+            ))}
 
         </>
     )
 }
 
-export default TopicsList
