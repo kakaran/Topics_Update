@@ -20,10 +20,13 @@ export async function POST(request) {
     }
 }
 
-export async function GET(request) { 
+export async function GET() { 
     try {
         await connectMongoDB();
+
         const topics = await Topic.find();
+        console.log("HI");
+        console.log(topics);
 
         if (topics) {
             return NextResponse.json({ topics })
